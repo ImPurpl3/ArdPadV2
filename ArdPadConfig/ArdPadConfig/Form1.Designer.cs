@@ -63,7 +63,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.chromaSendChkBx = new System.Windows.Forms.CheckBox();
             this.chromaAllChkBx = new System.Windows.Forms.CheckBox();
-            this.chromaIndivChkBx = new System.Windows.Forms.CheckBox();
+            this.upChkBx = new System.Windows.Forms.CheckBox();
+            this.leftChkBx = new System.Windows.Forms.CheckBox();
+            this.downChkBx = new System.Windows.Forms.CheckBox();
+            this.rightChkBx = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.redSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueSlide)).BeginInit();
@@ -76,7 +79,7 @@
             // port
             // 
             this.port.BaudRate = 250000;
-            this.port.PortName = "COM6";
+            this.port.PortName = "COM4";
             this.port.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.port_DataReceived);
             // 
             // redBox
@@ -427,7 +430,7 @@
             // 
             this.chromaSendChkBx.AutoSize = true;
             this.chromaSendChkBx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chromaSendChkBx.Location = new System.Drawing.Point(33, 478);
+            this.chromaSendChkBx.Location = new System.Drawing.Point(193, 471);
             this.chromaSendChkBx.Name = "chromaSendChkBx";
             this.chromaSendChkBx.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.chromaSendChkBx.Size = new System.Drawing.Size(48, 17);
@@ -440,29 +443,66 @@
             // 
             this.chromaAllChkBx.AutoSize = true;
             this.chromaAllChkBx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chromaAllChkBx.Location = new System.Drawing.Point(47, 500);
+            this.chromaAllChkBx.Location = new System.Drawing.Point(57, 506);
             this.chromaAllChkBx.Name = "chromaAllChkBx";
             this.chromaAllChkBx.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.chromaAllChkBx.Size = new System.Drawing.Size(34, 17);
+            this.chromaAllChkBx.Size = new System.Drawing.Size(12, 11);
             this.chromaAllChkBx.TabIndex = 34;
-            this.chromaAllChkBx.Text = "All";
             this.chromaAllChkBx.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chromaAllChkBx.UseVisualStyleBackColor = true;
             this.chromaAllChkBx.CheckedChanged += new System.EventHandler(this.chromaAllChkBx_CheckedChanged);
             // 
-            // chromaIndivChkBx
+            // upChkBx
             // 
-            this.chromaIndivChkBx.AutoSize = true;
-            this.chromaIndivChkBx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chromaIndivChkBx.Location = new System.Drawing.Point(13, 522);
-            this.chromaIndivChkBx.Name = "chromaIndivChkBx";
-            this.chromaIndivChkBx.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.chromaIndivChkBx.Size = new System.Drawing.Size(68, 17);
-            this.chromaIndivChkBx.TabIndex = 35;
-            this.chromaIndivChkBx.Text = "Individual";
-            this.chromaIndivChkBx.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chromaIndivChkBx.UseVisualStyleBackColor = true;
-            this.chromaIndivChkBx.CheckedChanged += new System.EventHandler(this.chromaIndivChkBx_CheckedChanged);
+            this.upChkBx.AutoSize = true;
+            this.upChkBx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.upChkBx.Location = new System.Drawing.Point(58, 482);
+            this.upChkBx.Name = "upChkBx";
+            this.upChkBx.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.upChkBx.Size = new System.Drawing.Size(37, 17);
+            this.upChkBx.TabIndex = 35;
+            this.upChkBx.Text = "Up";
+            this.upChkBx.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.upChkBx.UseVisualStyleBackColor = true;
+            // 
+            // leftChkBx
+            // 
+            this.leftChkBx.AutoSize = true;
+            this.leftChkBx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.leftChkBx.Location = new System.Drawing.Point(7, 503);
+            this.leftChkBx.Name = "leftChkBx";
+            this.leftChkBx.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.leftChkBx.Size = new System.Drawing.Size(41, 17);
+            this.leftChkBx.TabIndex = 36;
+            this.leftChkBx.Text = "Left";
+            this.leftChkBx.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.leftChkBx.UseVisualStyleBackColor = true;
+            // 
+            // downChkBx
+            // 
+            this.downChkBx.AutoSize = true;
+            this.downChkBx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.downChkBx.Location = new System.Drawing.Point(18, 524);
+            this.downChkBx.Name = "downChkBx";
+            this.downChkBx.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.downChkBx.Size = new System.Drawing.Size(51, 17);
+            this.downChkBx.TabIndex = 37;
+            this.downChkBx.Text = "Down";
+            this.downChkBx.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.downChkBx.UseVisualStyleBackColor = true;
+            // 
+            // rightChkBx
+            // 
+            this.rightChkBx.AutoSize = true;
+            this.rightChkBx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.rightChkBx.Location = new System.Drawing.Point(78, 503);
+            this.rightChkBx.Name = "rightChkBx";
+            this.rightChkBx.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rightChkBx.Size = new System.Drawing.Size(48, 17);
+            this.rightChkBx.TabIndex = 38;
+            this.rightChkBx.Text = "Right";
+            this.rightChkBx.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.rightChkBx.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -470,7 +510,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(584, 561);
-            this.Controls.Add(this.chromaIndivChkBx);
+            this.Controls.Add(this.rightChkBx);
+            this.Controls.Add(this.downChkBx);
+            this.Controls.Add(this.leftChkBx);
+            this.Controls.Add(this.upChkBx);
             this.Controls.Add(this.chromaAllChkBx);
             this.Controls.Add(this.chromaSendChkBx);
             this.Controls.Add(this.label8);
@@ -555,7 +598,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox chromaSendChkBx;
         private System.Windows.Forms.CheckBox chromaAllChkBx;
-        private System.Windows.Forms.CheckBox chromaIndivChkBx;
+        private System.Windows.Forms.CheckBox upChkBx;
+        private System.Windows.Forms.CheckBox leftChkBx;
+        private System.Windows.Forms.CheckBox downChkBx;
+        private System.Windows.Forms.CheckBox rightChkBx;
     }
 }
 

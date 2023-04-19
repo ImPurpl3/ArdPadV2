@@ -254,7 +254,7 @@ namespace ArdPadConfig
         int chromaTimeScale = 1;
         float chromaProgScale = 0.00066f;
 
-        private async void chromaThreadProc()
+        private async void chromaThreadProc(Button colBttn)
         {
             // 0.00066 for 10 ms - slowest
             // 0.004 for 1 ms - fastest
@@ -266,9 +266,7 @@ namespace ArdPadConfig
                     {
                         Color c = Rainbow(progress);
                         // make thing here for sending values to specific directions
-                        redSlide.Value = c.R;
-                        greenSlide.Value = c.G;
-                        blueSlide.Value = c.B;
+                        colBttn.BackColor = c;
                         progress += chromaProgScale;
                         await Task.Delay(chromaTimeScale);
                     }
@@ -289,15 +287,20 @@ namespace ArdPadConfig
             {
                 chromBttn.Text = "Unchromate";
                 tBool = true;
-                chromaThreadProc();
+                if (chromaAllChkBx.Checked)
+                {
+                    chromaThreadProc(leftDisp);
+                    chromaThreadProc(downDisp);
+                    chromaThreadProc(upDisp);
+                    chromaThreadProc(rightDisp);
+                }
+                
             } 
             else
             {
                 chromBttn.Text = "Chromate";
                 tBool = false;
             }
-
-
         }
 
         private void chromaSpeedSlide_ValueChanged(object sender, EventArgs e)
@@ -306,27 +309,32 @@ namespace ArdPadConfig
             chromaProgScale = (chromaTimeScale-1) * (0.004f - 0.00066f) / (10-1) + 0.00066f;
         }
 
-        private void sendChkBx_CheckedChanged(object sender, EventArgs e)
+        private async void chromaSend()
         {
 
+        }
+
+        private void sendChkBx_CheckedChanged(object sender, EventArgs e)
+        {
+            // task with 13 ms delay for 60 sends per second
         }
 
         private void chromaAllChkBx_CheckedChanged(object sender, EventArgs e)
         {
             if (chromaAllChkBx.Checked)
             {
-                chromaIndivChkBx.Enabled = false;
+                leftChkBx.Enabled = false;
+                downChkBx.Enabled = false;
+                upChkBx.Enabled = false;
+                rightChkBx.Enabled = false;
             }
             else
             {
-                chromaIndivChkBx.Enabled = true;
-
+                leftChkBx.Enabled = true;
+                downChkBx.Enabled = true;
+                upChkBx.Enabled = true;
+                rightChkBx.Enabled = true;
             }
-        }
-
-        private void chromaIndivChkBx_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
