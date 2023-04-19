@@ -12,3 +12,17 @@ C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\A
 C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.csproj.CopyComplete
 C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.exe
 C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.pdb
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\bin\Debug\ArdPadConfig.exe.config
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\bin\Debug\ArdPadConfig.exe
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\bin\Debug\ArdPadConfig.pdb
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\bin\Debug\Newtonsoft.Json.dll
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\bin\Debug\Newtonsoft.Json.xml
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.csproj.SuggestedBindingRedirects.cache
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.Form1.resources
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.Properties.Resources.resources
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.csproj.GenerateResource.cache
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.csproj.CopyComplete
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.exe
+C:\Users\User\Desktop\Stuff\Coding\ArdPadV2\ArdPadConfig\ArdPadConfig\obj\Debug\ArdPadConfig.pdb
