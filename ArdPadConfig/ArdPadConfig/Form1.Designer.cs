@@ -79,7 +79,7 @@
             // port
             // 
             this.port.BaudRate = 250000;
-            this.port.PortName = "COM4";
+            this.port.PortName = "COM6";
             this.port.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.port_DataReceived);
             // 
             // redBox
