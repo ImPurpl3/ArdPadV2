@@ -1,0 +1,14 @@
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\bin\Debug\ArdPadConfig.exe.config
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\bin\Debug\ArdPadConfig.exe
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\bin\Debug\ArdPadConfig.pdb
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.csproj.AssemblyReference.cache
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.csproj.SuggestedBindingRedirects.cache
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ServoSerialTest.Form1.resources
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.Properties.Resources.resources
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.csproj.GenerateResource.cache
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.csproj.CopyComplete
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.exe
+C:\Users\Lenovo\Desktop\Stuff\Coding\ServoSerialTest\ServoSerialTest\obj\Debug\ArdPadConfig.pdb
