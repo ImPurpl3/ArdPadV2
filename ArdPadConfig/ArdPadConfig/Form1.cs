@@ -311,7 +311,7 @@ namespace ArdPadConfig
 
         private async void chromaSend()
         {
-
+            //
         }
 
         private void sendChkBx_CheckedChanged(object sender, EventArgs e)
