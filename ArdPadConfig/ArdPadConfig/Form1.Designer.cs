@@ -67,6 +67,8 @@
             this.leftChkBx = new System.Windows.Forms.CheckBox();
             this.downChkBx = new System.Windows.Forms.CheckBox();
             this.rightChkBx = new System.Windows.Forms.CheckBox();
+            this.chromDelaySlide = new System.Windows.Forms.TrackBar();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.redSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueSlide)).BeginInit();
@@ -74,6 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.fadeDownSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sensSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chromaSpeedSlide)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chromDelaySlide)).BeginInit();
             this.SuspendLayout();
             // 
             // port
@@ -86,7 +89,7 @@
             // 
             this.redBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.redBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.redBox.Location = new System.Drawing.Point(25, 438);
+            this.redBox.Location = new System.Drawing.Point(25, 431);
             this.redBox.Name = "redBox";
             this.redBox.Size = new System.Drawing.Size(50, 20);
             this.redBox.TabIndex = 2;
@@ -97,7 +100,7 @@
             // 
             this.greenBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.greenBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.greenBox.Location = new System.Drawing.Point(96, 438);
+            this.greenBox.Location = new System.Drawing.Point(96, 431);
             this.greenBox.Name = "greenBox";
             this.greenBox.Size = new System.Drawing.Size(50, 20);
             this.greenBox.TabIndex = 3;
@@ -108,7 +111,7 @@
             // 
             this.blueBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.blueBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.blueBox.Location = new System.Drawing.Point(168, 438);
+            this.blueBox.Location = new System.Drawing.Point(168, 431);
             this.blueBox.Name = "blueBox";
             this.blueBox.Size = new System.Drawing.Size(50, 20);
             this.blueBox.TabIndex = 4;
@@ -165,7 +168,7 @@
             // 
             // redSlide
             // 
-            this.redSlide.Location = new System.Drawing.Point(28, 296);
+            this.redSlide.Location = new System.Drawing.Point(28, 289);
             this.redSlide.Maximum = 255;
             this.redSlide.Name = "redSlide";
             this.redSlide.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -177,7 +180,7 @@
             // 
             // greenSlide
             // 
-            this.greenSlide.Location = new System.Drawing.Point(99, 296);
+            this.greenSlide.Location = new System.Drawing.Point(99, 289);
             this.greenSlide.Maximum = 255;
             this.greenSlide.Name = "greenSlide";
             this.greenSlide.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -189,7 +192,7 @@
             // 
             // blueSlide
             // 
-            this.blueSlide.Location = new System.Drawing.Point(171, 296);
+            this.blueSlide.Location = new System.Drawing.Point(171, 289);
             this.blueSlide.Maximum = 255;
             this.blueSlide.Name = "blueSlide";
             this.blueSlide.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -216,7 +219,7 @@
             this.restartBttn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
             this.restartBttn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.restartBttn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.restartBttn.Location = new System.Drawing.Point(241, 499);
+            this.restartBttn.Location = new System.Drawing.Point(271, 480);
             this.restartBttn.Name = "restartBttn";
             this.restartBttn.Size = new System.Drawing.Size(100, 23);
             this.restartBttn.TabIndex = 14;
@@ -241,7 +244,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label1.Location = new System.Drawing.Point(42, 284);
+            this.label1.Location = new System.Drawing.Point(42, 277);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(15, 13);
             this.label1.TabIndex = 16;
@@ -251,7 +254,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label2.Location = new System.Drawing.Point(113, 283);
+            this.label2.Location = new System.Drawing.Point(113, 276);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(15, 13);
             this.label2.TabIndex = 17;
@@ -261,7 +264,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label3.Location = new System.Drawing.Point(186, 283);
+            this.label3.Location = new System.Drawing.Point(186, 276);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(14, 13);
             this.label3.TabIndex = 18;
@@ -271,7 +274,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label4.Location = new System.Drawing.Point(362, 283);
+            this.label4.Location = new System.Drawing.Point(362, 276);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 13);
             this.label4.TabIndex = 19;
@@ -281,7 +284,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label5.Location = new System.Drawing.Point(464, 283);
+            this.label5.Location = new System.Drawing.Point(464, 276);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(110, 13);
             this.label5.TabIndex = 20;
@@ -290,7 +293,7 @@
             // fadeUpSlide
             // 
             this.fadeUpSlide.LargeChange = 10;
-            this.fadeUpSlide.Location = new System.Drawing.Point(388, 296);
+            this.fadeUpSlide.Location = new System.Drawing.Point(388, 289);
             this.fadeUpSlide.Maximum = 1000;
             this.fadeUpSlide.Name = "fadeUpSlide";
             this.fadeUpSlide.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -305,7 +308,7 @@
             // 
             this.fadeUpBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.fadeUpBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.fadeUpBox.Location = new System.Drawing.Point(385, 438);
+            this.fadeUpBox.Location = new System.Drawing.Point(385, 431);
             this.fadeUpBox.Name = "fadeUpBox";
             this.fadeUpBox.Size = new System.Drawing.Size(50, 20);
             this.fadeUpBox.TabIndex = 21;
@@ -315,7 +318,7 @@
             // fadeDownSlide
             // 
             this.fadeDownSlide.LargeChange = 10;
-            this.fadeDownSlide.Location = new System.Drawing.Point(491, 296);
+            this.fadeDownSlide.Location = new System.Drawing.Point(491, 289);
             this.fadeDownSlide.Maximum = 1000;
             this.fadeDownSlide.Name = "fadeDownSlide";
             this.fadeDownSlide.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -330,7 +333,7 @@
             // 
             this.fadeDownBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.fadeDownBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.fadeDownBox.Location = new System.Drawing.Point(488, 438);
+            this.fadeDownBox.Location = new System.Drawing.Point(488, 431);
             this.fadeDownBox.Name = "fadeDownBox";
             this.fadeDownBox.Size = new System.Drawing.Size(50, 20);
             this.fadeDownBox.TabIndex = 23;
@@ -339,7 +342,7 @@
             // 
             // sensSlide
             // 
-            this.sensSlide.Location = new System.Drawing.Point(269, 296);
+            this.sensSlide.Location = new System.Drawing.Point(269, 289);
             this.sensSlide.Maximum = 1024;
             this.sensSlide.Name = "sensSlide";
             this.sensSlide.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -353,7 +356,7 @@
             // 
             this.sensBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.sensBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.sensBox.Location = new System.Drawing.Point(266, 438);
+            this.sensBox.Location = new System.Drawing.Point(266, 431);
             this.sensBox.Name = "sensBox";
             this.sensBox.Size = new System.Drawing.Size(50, 20);
             this.sensBox.TabIndex = 26;
@@ -364,7 +367,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label6.Location = new System.Drawing.Point(264, 283);
+            this.label6.Location = new System.Drawing.Point(264, 276);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 25;
@@ -396,7 +399,7 @@
             // 
             this.chromBttn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
             this.chromBttn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chromBttn.Location = new System.Drawing.Point(112, 475);
+            this.chromBttn.Location = new System.Drawing.Point(282, 520);
             this.chromBttn.Name = "chromBttn";
             this.chromBttn.Size = new System.Drawing.Size(75, 23);
             this.chromBttn.TabIndex = 30;
@@ -406,7 +409,7 @@
             // 
             // chromaSpeedSlide
             // 
-            this.chromaSpeedSlide.Location = new System.Drawing.Point(97, 523);
+            this.chromaSpeedSlide.Location = new System.Drawing.Point(151, 528);
             this.chromaSpeedSlide.Minimum = 1;
             this.chromaSpeedSlide.Name = "chromaSpeedSlide";
             this.chromaSpeedSlide.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -419,7 +422,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label8.Location = new System.Drawing.Point(131, 512);
+            this.label8.Location = new System.Drawing.Point(185, 515);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(38, 13);
             this.label8.TabIndex = 32;
@@ -430,14 +433,13 @@
             // 
             this.chromaSendChkBx.AutoSize = true;
             this.chromaSendChkBx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chromaSendChkBx.Location = new System.Drawing.Point(193, 471);
+            this.chromaSendChkBx.Location = new System.Drawing.Point(88, 532);
             this.chromaSendChkBx.Name = "chromaSendChkBx";
             this.chromaSendChkBx.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.chromaSendChkBx.Size = new System.Drawing.Size(48, 17);
             this.chromaSendChkBx.TabIndex = 33;
             this.chromaSendChkBx.Text = "Send";
             this.chromaSendChkBx.UseVisualStyleBackColor = true;
-            this.chromaSendChkBx.CheckedChanged += new System.EventHandler(this.sendChkBx_CheckedChanged);
             // 
             // chromaAllChkBx
             // 
@@ -504,12 +506,34 @@
             this.rightChkBx.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.rightChkBx.UseVisualStyleBackColor = true;
             // 
+            // chromDelaySlide
+            // 
+            this.chromDelaySlide.Location = new System.Drawing.Point(151, 482);
+            this.chromDelaySlide.Maximum = 500;
+            this.chromDelaySlide.Name = "chromDelaySlide";
+            this.chromDelaySlide.Size = new System.Drawing.Size(104, 45);
+            this.chromDelaySlide.TabIndex = 39;
+            this.chromDelaySlide.TickFrequency = 50;
+            this.chromDelaySlide.ValueChanged += new System.EventHandler(this.chromDelaySlide_ValueChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.label9.Location = new System.Drawing.Point(172, 469);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(69, 13);
+            this.label9.TabIndex = 40;
+            this.label9.Text = "Effect Speed";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(584, 561);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.rightChkBx);
             this.Controls.Add(this.downChkBx);
             this.Controls.Add(this.leftChkBx);
@@ -546,6 +570,7 @@
             this.Controls.Add(this.blueBox);
             this.Controls.Add(this.greenBox);
             this.Controls.Add(this.redBox);
+            this.Controls.Add(this.chromDelaySlide);
             this.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -558,6 +583,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.fadeDownSlide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sensSlide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chromaSpeedSlide)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chromDelaySlide)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -602,6 +628,8 @@
         private System.Windows.Forms.CheckBox leftChkBx;
         private System.Windows.Forms.CheckBox downChkBx;
         private System.Windows.Forms.CheckBox rightChkBx;
+        private System.Windows.Forms.TrackBar chromDelaySlide;
+        private System.Windows.Forms.Label label9;
     }
 }
 

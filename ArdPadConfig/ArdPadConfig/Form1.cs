@@ -11,6 +11,19 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.IO.Ports;
 
+/*
+todo
+- colour profile save
+- - use json process but add if statement for if for save
+
+- direction select for sens
+- - rgb slide toggles maybe
+
+- sens value display
+- - dynamic bar along outside edge of direction panel
+
+*/
+
 namespace ArdPadConfig
 {
     public partial class Form1 : Form
@@ -32,7 +45,7 @@ namespace ArdPadConfig
             
         }
 
-        private void subBttn_Click(object sender, EventArgs e)
+        private void sendColorJson()
         {
             // submit colour profile
             Color lc = leftDisp.BackColor;
@@ -40,7 +53,7 @@ namespace ArdPadConfig
             Color uc = upDisp.BackColor;
             Color rc = rightDisp.BackColor;
 
-            int[] rgbValues = { 
+            int[] rgbValues = {
                 lc.R, lc.G, lc.B, // left
                 dc.R, dc.G, dc.B, // down
                 uc.R, uc.G, uc.B, // up
@@ -48,10 +61,10 @@ namespace ArdPadConfig
             };
 
             Dictionary<int, int> pinAssignments = new Dictionary<int, int>();
-            
+
             for (int i = 0; i < rgbValues.Length; i++)
             {
-                pinAssignments[13-i] = rgbValues[i];
+                pinAssignments[13 - i] = rgbValues[i];
             }
 
             string json = JsonConvert.SerializeObject(pinAssignments, Formatting.None);
@@ -60,6 +73,11 @@ namespace ArdPadConfig
 
             Console.WriteLine("sent : " + parsedColour);
             port.Write(parsedColour);
+        }
+
+        private void subBttn_Click(object sender, EventArgs e)
+        {
+            sendColorJson();
         }
 
         private void slide_ValueChanged(object sender, EventArgs e)
@@ -280,27 +298,74 @@ namespace ArdPadConfig
             await Task.WhenAll();
         }
 
-        private void chromBttn_Click(object sender, EventArgs e)
+        int chromaDelay = 0;
+
+        private async void chromBttn_Click(object sender, EventArgs e)
         {
             // make button toggleable
             if (chromBttn.Text == "Chromate")
             {
                 chromBttn.Text = "Unchromate";
                 tBool = true;
+                chromaSendChkBx.Enabled = false;
                 if (chromaAllChkBx.Checked)
                 {
+                    int bef = chromaSpeedSlide.Value;
+                    chromaSpeedSlide.Enabled = false;
+                    chromDelaySlide.Enabled = false;
+                    chromaSpeedSlide.Value = 1;
                     chromaThreadProc(leftDisp);
+                    await Task.Delay(chromaDelay);
                     chromaThreadProc(downDisp);
+                    await Task.Delay(chromaDelay);
                     chromaThreadProc(upDisp);
+                    await Task.Delay(chromaDelay);
+                    chromaThreadProc(rightDisp);
+                    chromaSpeedSlide.Value = bef;
+                    chromaSpeedSlide.Enabled = true;
+                    
+                }
+                CheckBox f = leftChkBx;
+                if (f.Checked && f.Enabled)
+                {
+                    chromaThreadProc(leftDisp);
+                }
+                f = downChkBx;
+                if (f.Checked && f.Enabled)
+                {
+                    chromaThreadProc(downDisp);
+                }
+                f = upChkBx;
+                if (f.Checked && f.Enabled)
+                {
+                    chromaThreadProc(upDisp);
+                }
+                f = rightChkBx;
+                if (f.Checked && f.Enabled)
+                {
                     chromaThreadProc(rightDisp);
                 }
-                
+
+                if (chromaSendChkBx.Checked)
+                {
+                    tSend = true;
+                    chromaSend();
+                }
+                else
+                {
+                    tSend = false;
+                }
             } 
             else
             {
                 chromBttn.Text = "Chromate";
+                chromaSendChkBx.Enabled = true;
+                chromDelaySlide.Enabled = true;
                 tBool = false;
+                tSend = false;
             }
+
+            await Task.WhenAll();
         }
 
         private void chromaSpeedSlide_ValueChanged(object sender, EventArgs e)
@@ -309,14 +374,16 @@ namespace ArdPadConfig
             chromaProgScale = (chromaTimeScale-1) * (0.004f - 0.00066f) / (10-1) + 0.00066f;
         }
 
+        bool tSend = false;
+
         private async void chromaSend()
         {
-            // 
-        }
-
-        private void sendChkBx_CheckedChanged(object sender, EventArgs e)
-        {
-            // task with 13 ms delay for 60 sends per second
+            while (tSend == true)
+            {
+                sendColorJson();
+                await Task.Delay(5);
+            }
+            await Task.WhenAll();
         }
 
         private void chromaAllChkBx_CheckedChanged(object sender, EventArgs e)
@@ -335,6 +402,11 @@ namespace ArdPadConfig
                 upChkBx.Enabled = true;
                 rightChkBx.Enabled = true;
             }
+        }
+
+        private void chromDelaySlide_ValueChanged(object sender, EventArgs e)
+        {
+            chromaDelay = chromDelaySlide.Value;
         }
     }
 }
