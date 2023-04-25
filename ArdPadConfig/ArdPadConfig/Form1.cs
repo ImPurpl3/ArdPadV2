@@ -71,7 +71,7 @@ namespace ArdPadConfig
 
             string parsedColour = "a" + json + 'x';
 
-            Console.WriteLine("sent : " + parsedColour);
+            //Console.WriteLine("sent : " + parsedColour);
             port.Write(parsedColour);
         }
 
@@ -177,7 +177,7 @@ namespace ArdPadConfig
 
             String sendFadeStr = "f" + fadeUpMs.ToString() + ":" + fadeDownMs.ToString() + "x";
             port.Write(sendFadeStr);
-            Console.WriteLine("Sent : " + sendFadeStr);
+            //Console.WriteLine("Sent : " + sendFadeStr);
         }
 
         private void fadeSlide_ValueChanged(object sender, EventArgs e)
@@ -313,6 +313,7 @@ namespace ArdPadConfig
                     int bef = chromaSpeedSlide.Value;
                     chromaSpeedSlide.Enabled = false;
                     chromDelaySlide.Enabled = false;
+                    subBttn.Enabled = false;
                     chromaSpeedSlide.Value = 1;
                     chromaThreadProc(leftDisp);
                     await Task.Delay(chromaDelay);
@@ -361,6 +362,7 @@ namespace ArdPadConfig
                 chromBttn.Text = "Chromate";
                 chromaSendChkBx.Enabled = true;
                 chromDelaySlide.Enabled = true;
+                subBttn.Enabled = true;
                 tBool = false;
                 tSend = false;
             }
