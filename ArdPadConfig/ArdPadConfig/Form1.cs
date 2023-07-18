@@ -32,11 +32,25 @@ namespace ArdPadConfig
         public Form1()
         {
             InitializeComponent();
+            foreach (string portName in SerialPort.GetPortNames())
+            {
+                comPick.Items.Add(portName);
+            }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void comPick_SelectedIndexChanged(object sender, EventArgs e)
         {
-            port.Open();
+            port.PortName = comPick.Text;
+        }
+
+        private void comConnectBttn_Click(object sender, EventArgs e)
+        {
+            if (!port.IsOpen)
+            {
+                port.Open();
+                Console.WriteLine("Opened Port on " + port.PortName);
+            }
+            
         }
 
         private void port_DataReceived(object sender, SerialDataReceivedEventArgs e)

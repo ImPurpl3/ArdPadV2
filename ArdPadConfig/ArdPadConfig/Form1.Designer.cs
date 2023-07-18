@@ -69,6 +69,8 @@
             this.rightChkBx = new System.Windows.Forms.CheckBox();
             this.chromDelaySlide = new System.Windows.Forms.TrackBar();
             this.label9 = new System.Windows.Forms.Label();
+            this.comPick = new System.Windows.Forms.ComboBox();
+            this.comConnectBttn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.redSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueSlide)).BeginInit();
@@ -82,7 +84,7 @@
             // port
             // 
             this.port.BaudRate = 250000;
-            this.port.PortName = "COM6";
+            this.port.PortName = "COM3";
             this.port.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.port_DataReceived);
             // 
             // redBox
@@ -527,12 +529,39 @@
             this.label9.Text = "Effect Speed";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // comPick
+            // 
+            this.comPick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.comPick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comPick.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comPick.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.comPick.FormattingEnabled = true;
+            this.comPick.Location = new System.Drawing.Point(478, 41);
+            this.comPick.Name = "comPick";
+            this.comPick.Size = new System.Drawing.Size(84, 21);
+            this.comPick.TabIndex = 41;
+            this.comPick.SelectedIndexChanged += new System.EventHandler(this.comPick_SelectedIndexChanged);
+            // 
+            // comConnectBttn
+            // 
+            this.comConnectBttn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.comConnectBttn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comConnectBttn.Location = new System.Drawing.Point(478, 68);
+            this.comConnectBttn.Name = "comConnectBttn";
+            this.comConnectBttn.Size = new System.Drawing.Size(66, 23);
+            this.comConnectBttn.TabIndex = 42;
+            this.comConnectBttn.Text = "Connect";
+            this.comConnectBttn.UseVisualStyleBackColor = false;
+            this.comConnectBttn.Click += new System.EventHandler(this.comConnectBttn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(584, 561);
+            this.Controls.Add(this.comConnectBttn);
+            this.Controls.Add(this.comPick);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.rightChkBx);
             this.Controls.Add(this.downChkBx);
@@ -575,7 +604,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Pad Config";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.redSlide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenSlide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueSlide)).EndInit();
@@ -630,6 +658,8 @@
         private System.Windows.Forms.CheckBox rightChkBx;
         private System.Windows.Forms.TrackBar chromDelaySlide;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox comPick;
+        private System.Windows.Forms.Button comConnectBttn;
     }
 }
 
