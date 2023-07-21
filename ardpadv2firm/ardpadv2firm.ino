@@ -33,7 +33,7 @@ void setup() {
   SoftPWMSet(11, 0);
   SoftPWMSet(12, 0);
   SoftPWMSet(13, 0);
-  SoftPWMSetFadeTime(ALL, 100, 500);
+  SoftPWMSetFadeTime(ALL, 50, 150);
 
   Serial.begin(250000);
   Serial.setTimeout(10);

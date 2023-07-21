@@ -10,16 +10,17 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.IO.Ports;
-using System.Diagnostics;
+using SimWinInput;
 
 /*
 todo
 - colour profile save
 - - use json process but add if statement for if for save
 
-- direction select for sens
-- - rgb slide toggles maybe
+- gamepad integration
 
+- organize code
+- - add comments
 */
 
 namespace ArdPadConfig
@@ -27,9 +28,12 @@ namespace ArdPadConfig
     public partial class Form1 : Form
     {
 
+        private SimGamePad sgp = SimGamePad.Instance;
+
         public Form1()
         {
             InitializeComponent();
+
             foreach (string portName in SerialPort.GetPortNames())
             {
                 comPick.Items.Add(portName);
@@ -123,8 +127,6 @@ namespace ArdPadConfig
 
             if (calc > 73)
             {
-                //port.Write("cx");
-                //Console.WriteLine("ON");
 
                 double lightenPerc = 0.40;
                 Color ogc = dispBttn.BackColor;
@@ -139,8 +141,6 @@ namespace ArdPadConfig
             }
             else
             {
-                //port.Write("ox");
-                //Console.WriteLine("OFF : " + calc);
 
                 double darkenPerc = 0.25;
                 int red = (int)(dispBttn.BackColor.R * (1 - darkenPerc));
@@ -165,6 +165,61 @@ namespace ArdPadConfig
             }
         }
 
+        private void sgcHandler(char key, bool state)
+        {
+            if (state)
+            {
+                switch (key)
+                {
+                    case 'L':
+                        // send X
+                        sgp.SetControl(GamePadControl.X);
+                        break;
+                    case 'D':
+                        // send A
+                        sgp.SetControl(GamePadControl.A);
+                        break;
+                    case 'U':
+                        // send Y
+                        sgp.SetControl(GamePadControl.Y);
+                        break;
+                    case 'R':
+                        // send B
+                        sgp.SetControl(GamePadControl.B);
+                        break;
+                    default:
+                        break;
+                    
+                }
+                Console.WriteLine(sgp.State[0].Buttons.ToString());
+            }
+            else if (!state)
+            {
+                switch (key)
+                {
+                    case 'L':
+                        // send X
+                        sgp.ReleaseControl(GamePadControl.X);
+                        break;
+                    case 'D':
+                        // send A
+                        sgp.ReleaseControl(GamePadControl.A);
+                        break;
+                    case 'U':
+                        // send Y
+                        sgp.ReleaseControl(GamePadControl.Y);
+                        break;
+                    case 'R':
+                        // send B
+                        sgp.ReleaseControl(GamePadControl.B);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+        }
+
         private void controlHandler()
         {
             foreach (char key in "LDUR")
@@ -174,6 +229,8 @@ namespace ArdPadConfig
 
                 if (sens > sensTiv && !sentChk[key])
                 {
+                    sgcHandler(key, true);
+
                     port.Write("c" + key + "x");
                     //Console.WriteLine("ON : " + key + " ; " + sens + " : " + sensTiv);
                     lastSent = key;
@@ -181,6 +238,8 @@ namespace ArdPadConfig
                 }
                 if (sens <= sensTiv && sentChk[key])
                 {
+                    sgcHandler(key, false);
+
                     port.Write("o" + lastSent + "x");
                     //Console.WriteLine("Sent: o" + lastSent + "x");
                     //Console.WriteLine("OFF : " + key + " ; " + sens + " : " + sensTiv);
@@ -655,6 +714,8 @@ namespace ArdPadConfig
             Button sensComs = (Button)sender;
             if (sensComs.Text == "Start")
             {
+                sgp.Initialize();
+                sgp.PlugIn();
                 sensDict.Clear();
                 sensitiveDict.Clear();
                 sentChk.Clear();
@@ -665,6 +726,8 @@ namespace ArdPadConfig
             }
             else
             {
+                sgp.Unplug();
+                sgp.ShutDown();
                 sensDict.Clear();
                 port.Write("bx");
                 sensComs.Text = "Start";
@@ -725,6 +788,21 @@ namespace ArdPadConfig
         {
             unFocus();
             this.ActiveControl = null;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            sgp.ShutDown();
+            
+            if (port.IsOpen)
+            {
+                if (sensorComsBttn.Text == "Stop")
+                {
+                    port.Write("bx");
+                }
+                
+                port.Close();
+            }
         }
     }
 }
