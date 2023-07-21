@@ -39,8 +39,27 @@ void setup() {
   Serial.setTimeout(10);
 }
 
-void loop() {
+bool sendSens = false;
+char toSend[50];
+int sensDigits[4];
 
+void loop() {
+  if (sendSens) {
+
+    sensDigits[0] = analogRead(A0);
+    sensDigits[1] = analogRead(A1);
+    sensDigits[2] = analogRead(A2);
+    sensDigits[3] = analogRead(A3);
+
+    // Format the entire string manually with padding for 'U'
+    sprintf(toSend, "yL%01d%03dD%01d%03dU%01d%03dR%01d%03dx",
+        sensDigits[0] / 1000, sensDigits[0] % 1000,
+        sensDigits[1] / 1000, sensDigits[1] % 1000,
+        sensDigits[2] / 1000, sensDigits[2] % 1000,
+        sensDigits[3] / 1000, sensDigits[3] % 1000);
+    Serial.println(String(toSend));
+
+  }
 }
 
 void colWriteHandler(int pin, int value) {
@@ -92,7 +111,40 @@ void ledFadeSet(String trimIn) {
   SoftPWMSetFadeTime(ALL, fadeUpMs, fadeDownMs);
 }
 
+void sensSendToggle() {
+  if (sendSens == false) {
+    sendSens = true;
+    Serial.println("Sensor Send On!");
+  } else {
+    sendSens = false;
+    Serial.println("Sensor Send Off!");
+  }
+}
+
 bool colUp = false;
+
+void writeFlash(int from, int to, int value) {
+  for (int i=from; i<=to; i++) {
+    colWriteHandler(i, value);
+  }
+}
+
+void flashDirection(char dir, int writeVal) {
+  switch (dir) {
+    case 'L':
+      writeFlash(11, 13, writeVal);
+      break;
+    case 'D':
+      writeFlash(8, 10, writeVal);
+      break;
+    case 'U':
+      writeFlash(5, 7, writeVal);
+      break;
+    case 'R':
+      writeFlash(2, 4, writeVal);
+      break;
+  }
+}
 
 void serialEvent() {
   serialData = Serial.readStringUntil('x');
@@ -114,16 +166,14 @@ void serialEvent() {
 
     case 'b':
       // sensor data
-      Serial.println("Sensor Data Recieved");
+      sensSendToggle();
 
       break;
 
     case 'c':
       // colour update on
       colUp = true;
-      for (int i=2; i<=13; i++) {
-        colWriteHandler(i, 255);
-      }
+      flashDirection(trimData.charAt(0), 255);
       break;
 
     case 'o':
@@ -132,9 +182,7 @@ void serialEvent() {
         colProf(colProfMem);
       } 
       else {
-        for (int i=2; i<=13; i++) {
-          colWriteHandler(i, 0);
-        }
+        flashDirection(trimData.charAt(0), 0);
       }
       colUp = false;
       break;

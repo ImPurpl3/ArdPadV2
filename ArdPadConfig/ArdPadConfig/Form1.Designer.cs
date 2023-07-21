@@ -43,7 +43,6 @@
             this.blueSlide = new System.Windows.Forms.TrackBar();
             this.subBttn = new System.Windows.Forms.Button();
             this.restartBttn = new System.Windows.Forms.Button();
-            this.textInator = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -56,7 +55,6 @@
             this.sensSlide = new System.Windows.Forms.TrackBar();
             this.sensBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.fadeSubBttn = new System.Windows.Forms.Button();
             this.chromBttn = new System.Windows.Forms.Button();
             this.chromaSpeedSlide = new System.Windows.Forms.TrackBar();
@@ -71,6 +69,14 @@
             this.label9 = new System.Windows.Forms.Label();
             this.comPick = new System.Windows.Forms.ComboBox();
             this.comConnectBttn = new System.Windows.Forms.Button();
+            this.refreshPortBttn = new System.Windows.Forms.Button();
+            this.sensorComsBttn = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.downSens = new System.Windows.Forms.Panel();
+            this.leftSens = new System.Windows.Forms.Panel();
+            this.upSens = new System.Windows.Forms.Panel();
+            this.rightSens = new System.Windows.Forms.Panel();
+            this.rgbUpdateChk = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.redSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueSlide)).BeginInit();
@@ -131,6 +137,8 @@
             this.leftDisp.Text = "Left";
             this.leftDisp.UseVisualStyleBackColor = false;
             this.leftDisp.Click += new System.EventHandler(this.Disp_Click);
+            this.leftDisp.Enter += new System.EventHandler(this.focusUp);
+            this.leftDisp.Leave += new System.EventHandler(this.focusDown);
             // 
             // downDisp
             // 
@@ -143,6 +151,8 @@
             this.downDisp.Text = "Down";
             this.downDisp.UseVisualStyleBackColor = false;
             this.downDisp.Click += new System.EventHandler(this.Disp_Click);
+            this.downDisp.Enter += new System.EventHandler(this.focusUp);
+            this.downDisp.Leave += new System.EventHandler(this.focusDown);
             // 
             // rightDisp
             // 
@@ -155,6 +165,8 @@
             this.rightDisp.Text = "Right";
             this.rightDisp.UseVisualStyleBackColor = false;
             this.rightDisp.Click += new System.EventHandler(this.Disp_Click);
+            this.rightDisp.Enter += new System.EventHandler(this.focusUp);
+            this.rightDisp.Leave += new System.EventHandler(this.focusDown);
             // 
             // upDisp
             // 
@@ -167,6 +179,8 @@
             this.upDisp.Text = "Up";
             this.upDisp.UseVisualStyleBackColor = false;
             this.upDisp.Click += new System.EventHandler(this.Disp_Click);
+            this.upDisp.Enter += new System.EventHandler(this.focusUp);
+            this.upDisp.Leave += new System.EventHandler(this.focusDown);
             // 
             // redSlide
             // 
@@ -228,19 +242,6 @@
             this.restartBttn.Text = "Restart Arduino";
             this.restartBttn.UseVisualStyleBackColor = false;
             this.restartBttn.Click += new System.EventHandler(this.restartBttn_Click);
-            // 
-            // textInator
-            // 
-            this.textInator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
-            this.textInator.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textInator.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.textInator.Location = new System.Drawing.Point(405, 490);
-            this.textInator.Multiline = true;
-            this.textInator.Name = "textInator";
-            this.textInator.Size = new System.Drawing.Size(130, 49);
-            this.textInator.TabIndex = 15;
-            this.textInator.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textInator_KeyDown);
-            this.textInator.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textInator_KeyUp);
             // 
             // label1
             // 
@@ -344,19 +345,23 @@
             // 
             // sensSlide
             // 
+            this.sensSlide.Enabled = false;
             this.sensSlide.Location = new System.Drawing.Point(269, 289);
             this.sensSlide.Maximum = 1024;
+            this.sensSlide.Minimum = 1;
             this.sensSlide.Name = "sensSlide";
             this.sensSlide.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.sensSlide.Size = new System.Drawing.Size(45, 136);
             this.sensSlide.TabIndex = 27;
-            this.sensSlide.TickFrequency = 64;
+            this.sensSlide.TickFrequency = 1024;
             this.sensSlide.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.sensSlide.Value = 1024;
             this.sensSlide.ValueChanged += new System.EventHandler(this.sensSlide_ValueChanged);
             // 
             // sensBox
             // 
             this.sensBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.sensBox.Enabled = false;
             this.sensBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.sensBox.Location = new System.Drawing.Point(266, 431);
             this.sensBox.Name = "sensBox";
@@ -375,15 +380,6 @@
             this.label6.TabIndex = 25;
             this.label6.Text = "Sensitivity";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(445, 475);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(47, 13);
-            this.label7.TabIndex = 28;
-            this.label7.Text = "TestPad";
             // 
             // fadeSubBttn
             // 
@@ -548,11 +544,88 @@
             this.comConnectBttn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comConnectBttn.Location = new System.Drawing.Point(478, 68);
             this.comConnectBttn.Name = "comConnectBttn";
-            this.comConnectBttn.Size = new System.Drawing.Size(66, 23);
+            this.comConnectBttn.Size = new System.Drawing.Size(84, 23);
             this.comConnectBttn.TabIndex = 42;
             this.comConnectBttn.Text = "Connect";
             this.comConnectBttn.UseVisualStyleBackColor = false;
             this.comConnectBttn.Click += new System.EventHandler(this.comConnectBttn_Click);
+            // 
+            // refreshPortBttn
+            // 
+            this.refreshPortBttn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.refreshPortBttn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.refreshPortBttn.Location = new System.Drawing.Point(478, 97);
+            this.refreshPortBttn.Name = "refreshPortBttn";
+            this.refreshPortBttn.Size = new System.Drawing.Size(84, 23);
+            this.refreshPortBttn.TabIndex = 43;
+            this.refreshPortBttn.Text = "Refresh";
+            this.refreshPortBttn.UseVisualStyleBackColor = false;
+            this.refreshPortBttn.Click += new System.EventHandler(this.refreshPortBttn_Click);
+            // 
+            // sensorComsBttn
+            // 
+            this.sensorComsBttn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.sensorComsBttn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.sensorComsBttn.Location = new System.Drawing.Point(28, 39);
+            this.sensorComsBttn.Name = "sensorComsBttn";
+            this.sensorComsBttn.Size = new System.Drawing.Size(84, 23);
+            this.sensorComsBttn.TabIndex = 44;
+            this.sensorComsBttn.Text = "Start";
+            this.sensorComsBttn.UseVisualStyleBackColor = false;
+            this.sensorComsBttn.Click += new System.EventHandler(this.sensorComsBttn_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.label10.Location = new System.Drawing.Point(15, 20);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(118, 13);
+            this.label10.TabIndex = 45;
+            this.label10.Text = "Recieve Sensor Values";
+            // 
+            // downSens
+            // 
+            this.downSens.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.downSens.Location = new System.Drawing.Point(255, 244);
+            this.downSens.Name = "downSens";
+            this.downSens.Size = new System.Drawing.Size(73, 10);
+            this.downSens.TabIndex = 47;
+            // 
+            // leftSens
+            // 
+            this.leftSens.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(225)))));
+            this.leftSens.Location = new System.Drawing.Point(181, 170);
+            this.leftSens.Name = "leftSens";
+            this.leftSens.Size = new System.Drawing.Size(73, 10);
+            this.leftSens.TabIndex = 48;
+            // 
+            // upSens
+            // 
+            this.upSens.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.upSens.Location = new System.Drawing.Point(255, 96);
+            this.upSens.Name = "upSens";
+            this.upSens.Size = new System.Drawing.Size(73, 10);
+            this.upSens.TabIndex = 49;
+            // 
+            // rightSens
+            // 
+            this.rightSens.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(225)))));
+            this.rightSens.Location = new System.Drawing.Point(329, 170);
+            this.rightSens.Name = "rightSens";
+            this.rightSens.Size = new System.Drawing.Size(73, 10);
+            this.rightSens.TabIndex = 50;
+            // 
+            // rgbUpdateChk
+            // 
+            this.rgbUpdateChk.AutoSize = true;
+            this.rgbUpdateChk.Location = new System.Drawing.Point(397, 503);
+            this.rgbUpdateChk.Name = "rgbUpdateChk";
+            this.rgbUpdateChk.Size = new System.Drawing.Size(165, 17);
+            this.rgbUpdateChk.TabIndex = 51;
+            this.rgbUpdateChk.Text = "Sensitivity and Colour Update";
+            this.rgbUpdateChk.UseVisualStyleBackColor = true;
+            this.rgbUpdateChk.CheckedChanged += new System.EventHandler(this.rgbUpdateChk_CheckedChanged);
             // 
             // Form1
             // 
@@ -560,6 +633,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(584, 561);
+            this.Controls.Add(this.rgbUpdateChk);
+            this.Controls.Add(this.rightSens);
+            this.Controls.Add(this.upSens);
+            this.Controls.Add(this.leftSens);
+            this.Controls.Add(this.downSens);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.sensorComsBttn);
+            this.Controls.Add(this.refreshPortBttn);
             this.Controls.Add(this.comConnectBttn);
             this.Controls.Add(this.comPick);
             this.Controls.Add(this.label9);
@@ -573,7 +654,6 @@
             this.Controls.Add(this.chromaSpeedSlide);
             this.Controls.Add(this.chromBttn);
             this.Controls.Add(this.fadeSubBttn);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.sensSlide);
             this.Controls.Add(this.sensBox);
             this.Controls.Add(this.label6);
@@ -586,7 +666,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textInator);
             this.Controls.Add(this.restartBttn);
             this.Controls.Add(this.subBttn);
             this.Controls.Add(this.blueSlide);
@@ -604,6 +683,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Pad Config";
+            this.Click += new System.EventHandler(this.Form1_Click);
             ((System.ComponentModel.ISupportInitialize)(this.redSlide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenSlide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.blueSlide)).EndInit();
@@ -632,7 +712,6 @@
         private System.Windows.Forms.TrackBar blueSlide;
         private System.Windows.Forms.Button subBttn;
         private System.Windows.Forms.Button restartBttn;
-        private System.Windows.Forms.TextBox textInator;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -645,7 +724,6 @@
         private System.Windows.Forms.TrackBar sensSlide;
         private System.Windows.Forms.TextBox sensBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button fadeSubBttn;
         private System.Windows.Forms.Button chromBttn;
         private System.Windows.Forms.TrackBar chromaSpeedSlide;
@@ -660,6 +738,14 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox comPick;
         private System.Windows.Forms.Button comConnectBttn;
+        private System.Windows.Forms.Button refreshPortBttn;
+        private System.Windows.Forms.Button sensorComsBttn;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel downSens;
+        private System.Windows.Forms.Panel leftSens;
+        private System.Windows.Forms.Panel upSens;
+        private System.Windows.Forms.Panel rightSens;
+        private System.Windows.Forms.CheckBox rgbUpdateChk;
     }
 }
 

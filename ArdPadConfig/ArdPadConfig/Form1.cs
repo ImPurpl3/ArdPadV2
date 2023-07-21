@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.IO.Ports;
+using System.Diagnostics;
 
 /*
 todo
@@ -18,9 +19,6 @@ todo
 
 - direction select for sens
 - - rgb slide toggles maybe
-
-- sens value display
-- - dynamic bar along outside edge of direction panel
 
 */
 
@@ -36,6 +34,11 @@ namespace ArdPadConfig
             {
                 comPick.Items.Add(portName);
             }
+            subBttn.Enabled = false;
+            restartBttn.Enabled = false;
+            chromBttn.Enabled = false;
+            fadeSubBttn.Enabled = false;
+            sensorComsBttn.Enabled = false;
         }
 
         private void comPick_SelectedIndexChanged(object sender, EventArgs e)
@@ -45,18 +48,192 @@ namespace ArdPadConfig
 
         private void comConnectBttn_Click(object sender, EventArgs e)
         {
-            if (!port.IsOpen)
+            Button comBttn = (Button)sender;
+            if (comBttn.Text == "Connect")
             {
-                port.Open();
-                Console.WriteLine("Opened Port on " + port.PortName);
+                if (!port.IsOpen)
+                {
+                    try
+                    {
+                        port.Open();
+                        subBttn.Enabled = true;
+                        restartBttn.Enabled = true;
+                        chromBttn.Enabled = true;
+                        fadeSubBttn.Enabled = true;
+                        sensorComsBttn.Enabled = true;
+                        comBttn.Text = "Disconnect";
+                        Console.WriteLine("Opened Port on " + port.PortName);
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        Console.WriteLine("Couldn't open COM port");
+                    }
+                }
+            }
+            else
+            {
+                port.Close();
+                Console.WriteLine("Closed Port on " + port.PortName);
+                comPick.Enabled = true;
+                comPick.Enabled = false;
+                subBttn.Enabled = false;
+                restartBttn.Enabled = false;
+                chromBttn.Enabled = false;
+                fadeSubBttn.Enabled = false;
+                sensorComsBttn.Enabled = false;
+                comBttn.Text = "Connect";
             }
             
         }
 
+        private Dictionary<char, int> sensDict = new Dictionary<char, int>();
+        private Dictionary<char, int> sensitiveDict = new Dictionary<char, int>();
+        private int sensValInt = 0;
+
+        private void initSensDict()
+        {
+            foreach (char direction in "LDUR")
+            {
+                sensDict.Add(direction, 0);
+                sensitiveDict.Add(direction, 1024);
+            }
+            if (focusButton != null)
+            {
+                sensBox.Enabled = true;
+                sensSlide.Enabled = true;
+            }
+            
+        }
+
+        static void PrintDictionaryContents(Dictionary<char, int> dictionary)
+        {
+            System.Text.StringBuilder output = new System.Text.StringBuilder();
+            foreach (var kvp in dictionary)
+            {
+                output.Append($"{kvp.Key} : {kvp.Value} - ");
+            }
+            Console.WriteLine(output.ToString().TrimEnd('-', ' '));
+        }
+
+        private int keepBounds(int calc, Panel sensPanCol)
+        {
+            string dirFind = sensPanCol.Name.Substring(0, sensPanCol.Name.Length - 4) + "Disp";
+            Control[] bttnCon = this.Controls.Find(dirFind, true);
+            Control dispBttn = bttnCon[0];
+
+            if (calc > 73)
+            {
+                //port.Write("cx");
+                //Console.WriteLine("ON");
+
+                double lightenPerc = 0.40;
+                Color ogc = dispBttn.BackColor;
+                int red = (int)Math.Min(255, ogc.R + (255 - ogc.R) * lightenPerc);
+                int green = (int)Math.Min(255, ogc.G + (255 - ogc.G) * lightenPerc);
+                int blue = (int)Math.Min(255, ogc.B + (255 - ogc.B) * lightenPerc);
+                Color LightenColor = Color.FromArgb(red, green, blue);
+
+                sensPanCol.BackColor = LightenColor;
+
+                return 73;
+            }
+            else
+            {
+                //port.Write("ox");
+                //Console.WriteLine("OFF : " + calc);
+
+                double darkenPerc = 0.25;
+                int red = (int)(dispBttn.BackColor.R * (1 - darkenPerc));
+                int green = (int)(dispBttn.BackColor.G * (1 - darkenPerc));
+                int blue = (int)(dispBttn.BackColor.B * (1 - darkenPerc));
+                Color DarkenColor = Color.FromArgb(red, green, blue);
+
+                sensPanCol.BackColor = DarkenColor;
+
+                return calc;
+            }
+        }
+
+        private Dictionary<char, bool> sentChk = new Dictionary<char, bool>();
+        private char lastSent;
+
+        private void initSentDict()
+        {
+            foreach (char dir in "LDUR")
+            {
+                sentChk.Add(dir, false);
+            }
+        }
+
+        private void controlHandler()
+        {
+            foreach (char key in "LDUR")
+            {
+                int sens = sensDict[key];
+                int sensTiv = sensitiveDict[key];
+
+                if (sens > sensTiv && !sentChk[key])
+                {
+                    port.Write("c" + key + "x");
+                    //Console.WriteLine("ON : " + key + " ; " + sens + " : " + sensTiv);
+                    lastSent = key;
+                    sentChk[key] = true;
+                }
+                if (sens <= sensTiv && sentChk[key])
+                {
+                    port.Write("o" + lastSent + "x");
+                    //Console.WriteLine("Sent: o" + lastSent + "x");
+                    //Console.WriteLine("OFF : " + key + " ; " + sens + " : " + sensTiv);
+                    sentChk[key] = false;
+                }
+            }
+        }
+
+        private void updateSensDisp(Panel sensDispPan, char key)
+        {
+            if (sensDict.Count > 0 && sensitiveDict.Count > 0)
+            {
+                sensDispPan.Width = keepBounds(73 * sensDict[key] / sensitiveDict[key], sensDispPan);
+            }
+        }
+
+        private void updateSensDisp()
+        {
+            leftSens.Invoke(new Action(() => updateSensDisp(leftSens, 'L')));
+            downSens.Invoke(new Action(() => updateSensDisp(downSens, 'D')));
+            upSens.Invoke(new Action(() => updateSensDisp(upSens, 'U')));
+            rightSens.Invoke(new Action(() => updateSensDisp(rightSens, 'R')));
+
+            if (sensDict.Count > 0 && sensitiveDict.Count > 0)
+            {
+                controlHandler();
+            }
+
+            //PrintDictionaryContents(sensDict);
+        }
+
         private void port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Console.WriteLine(port.ReadExisting());
+            string incomeInfo = port.ReadExisting();
+            //Console.WriteLine(incomeInfo);
             
+            if (incomeInfo[0] == 'y' && incomeInfo.Length >= 22)
+            {
+                if (incomeInfo[21] == 'x')
+                {
+                    string income = incomeInfo;
+                    int indexMult = 3;
+                    foreach (char direction in "LDUR")
+                    {
+                        Int32.TryParse(income.Substring(income.IndexOf(direction) + 1, income.IndexOf(direction) + indexMult), out sensValInt);
+                        sensDict[direction] = sensValInt;
+                        indexMult = indexMult - 5;
+                    }
+                    updateSensDisp();
+
+                    //PrintDictionaryContents(sensDict);
+                }
+            }
         }
 
         private void sendColorJson()
@@ -113,6 +290,42 @@ namespace ArdPadConfig
             subBttn.BackColor = Color.FromArgb(redSlide.Value, greenSlide.Value, blueSlide.Value);
         }
 
+        private bool rgbUpdate;
+
+        private void rgbUpdateChk_CheckedChanged(object sender, EventArgs e)
+        {
+            rgbUpdate = rgbUpdateChk.Checked;
+            unFocus();
+
+        }
+
+        private bool firstClick;
+
+        private void colorChange()
+        {
+            if (rgbUpdate)
+            {
+                if (focusButton != null && firstClick == false)
+                {
+                    focusButton.BackColor = Color.FromArgb(redSlide.Value, greenSlide.Value, blueSlide.Value);
+                    Color cc = focusButton.BackColor;
+                    int r = 255 - cc.R;
+                    int g = 255 - cc.G;
+                    int b = 255 - cc.B;
+                    focusButton.ForeColor = Color.FromArgb((int)(r), (int)(g), (int)(b));
+                }
+            }
+        }
+
+        private void sensChange()
+        {
+            if (focusButton != null)
+            {
+                sensitiveDict[Char.ToUpper(focusButton.Name[0])] = sensSlide.Value;
+            }
+            //PrintDictionaryContents(sensitiveDict);
+        }
+
         private void redBox_TextChanged(object sender, EventArgs e)
         {
             int redInt;
@@ -125,6 +338,7 @@ namespace ArdPadConfig
             else
             {
                 redSlide.Value = redInt;
+                colorChange();
             }   
         }
 
@@ -140,6 +354,7 @@ namespace ArdPadConfig
             else
             {
                 greenSlide.Value = greenInt;
+                colorChange();
             }
         }
 
@@ -155,33 +370,29 @@ namespace ArdPadConfig
             else
             {
                 blueSlide.Value = blueInt;
+                colorChange();
             }
         }
 
         private void Disp_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            button.BackColor = Color.FromArgb(redSlide.Value, greenSlide.Value, blueSlide.Value);
-
+            if (!rgbUpdate)
+            {
+                button.BackColor = Color.FromArgb(redSlide.Value, greenSlide.Value, blueSlide.Value);
+            }
+            if (sensorComsBttn.Text == "Stop" && focusButton != null && chromBttn.Text == "Chromate")
+            {
+                sensBox.Enabled = true;
+                sensSlide.Enabled = true;
+            }
         }
 
         private void restartBttn_Click(object sender, EventArgs e)
         {
             port.Write("rx");
+            sensorComsBttn.Text = "Start";
             Console.WriteLine("Sent Restart");
-        }
-
-        private void textInator_KeyDown(object sender, KeyEventArgs e)
-        {
-            port.Write("cx");
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer();
-            player.SoundLocation = "C:/Users/Lenovo/Music/RIZZ Sound Effect1.wav";
-            player.Play();
-        }
-
-        private void textInator_KeyUp(object sender, KeyEventArgs e)
-        {
-            port.Write("ox");
         }
 
         private void fadeSubBttn_Click(object sender, EventArgs e)
@@ -255,6 +466,8 @@ namespace ArdPadConfig
             else
             {
                 sensSlide.Value = sensInt;
+                sensChange();
+
             }
         }
 
@@ -322,6 +535,8 @@ namespace ArdPadConfig
                 chromBttn.Text = "Unchromate";
                 tBool = true;
                 chromaSendChkBx.Enabled = false;
+                rgbUpdateChk.Checked = false;
+                rgbUpdateChk.Enabled = false;
                 if (chromaAllChkBx.Checked)
                 {
                     int bef = chromaSpeedSlide.Value;
@@ -376,6 +591,7 @@ namespace ArdPadConfig
                 chromBttn.Text = "Chromate";
                 chromaSendChkBx.Enabled = true;
                 chromDelaySlide.Enabled = true;
+                rgbUpdateChk.Enabled = true;
                 subBttn.Enabled = true;
                 tBool = false;
                 tSend = false;
@@ -423,6 +639,92 @@ namespace ArdPadConfig
         private void chromDelaySlide_ValueChanged(object sender, EventArgs e)
         {
             chromaDelay = chromDelaySlide.Value;
+        }
+
+        private void refreshPortBttn_Click(object sender, EventArgs e)
+        {
+            foreach (string portName in SerialPort.GetPortNames())
+            {
+                comPick.Items.Clear();
+                comPick.Items.Add(portName);
+            }
+        }
+
+        private void sensorComsBttn_Click(object sender, EventArgs e)
+        {
+            Button sensComs = (Button)sender;
+            if (sensComs.Text == "Start")
+            {
+                sensDict.Clear();
+                sensitiveDict.Clear();
+                sentChk.Clear();
+                initSensDict();
+                initSentDict();
+                port.Write("bx");
+                sensComs.Text = "Stop";
+            }
+            else
+            {
+                sensDict.Clear();
+                port.Write("bx");
+                sensComs.Text = "Start";
+            }
+        }
+
+        private Button focusButton;
+
+        private void focusUp(object sender, EventArgs e)
+        {
+            if (rgbUpdate)
+            {
+                unFocus();
+                focusButton = (Button)sender;
+                firstClick = true;
+                redSlide.Value = focusButton.BackColor.R;
+                greenSlide.Value = focusButton.BackColor.G;
+                blueSlide.Value = focusButton.BackColor.B;
+
+                if (sensorComsBttn.Text == "Stop")
+                {
+                    sensBox.Enabled = true;
+                    sensSlide.Enabled = true;
+
+                    sensSlide.Value = sensitiveDict[Char.ToUpper(focusButton.Name[0])];
+                }
+
+                firstClick = false;
+            }
+        }
+
+        private void focusDown(object sender, EventArgs e)
+        {
+            focusButton = (Button)sender;
+        }
+
+        private void unFocus()
+        {
+            if (focusButton != null)
+            {
+                Color cc = focusButton.ForeColor;
+                if (cc.R + cc.G + cc.B < 383)
+                {
+                    focusButton.ForeColor = Color.FromArgb(0, 0, 0);
+                }
+                else
+                {
+                    focusButton.ForeColor = Color.FromArgb(255, 255, 255);
+                }
+
+            }
+            sensBox.Enabled = false;
+            sensSlide.Enabled = false;
+            focusButton = null;
+        }
+
+        private void Form1_Click(object sender, EventArgs e)
+        {
+            unFocus();
+            this.ActiveControl = null;
         }
     }
 }
